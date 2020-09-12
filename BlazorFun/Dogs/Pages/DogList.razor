@@ -1,0 +1,30 @@
+﻿@page "/doglist"
+
+
+<h1>Dogs</h1>
+
+<p>All dogs</p>
+
+@if (_dogs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Dogs:</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dog in _dogs)
+            {
+                <tr>
+                    <td>@dog</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

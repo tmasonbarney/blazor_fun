@@ -1,0 +1,23 @@
+﻿@page "/"
+
+<h1>Welcome to Dogs!</h1>
+
+<p>Search for a dog breed:</p>
+
+<BlazoredTypeahead SearchMethod="SearchDogs"
+                   @bind-Value="_selectedBreed">
+    <SelectedTemplate>
+        @context
+    </SelectedTemplate>
+    <ResultTemplate>
+        @context
+    </ResultTemplate>
+</BlazoredTypeahead>
+
+@if (_selectedBreed != null)
+{
+    <br />
+    <p>Selected breed is: @_selectedBreed</p>
+}
+
+
