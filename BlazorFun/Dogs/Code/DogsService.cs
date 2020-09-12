@@ -36,6 +36,20 @@ namespace Dogs.Code
 
         }
 
+        public async Task<string> GetDogImage(string breed)
+        {
+
+            var response = await RetrieveDogImage(breed);
+
+            if (response is null)
+            {
+                return null;
+            }
+
+            return response;
+
+        }
+
 
 
         private async Task<Message> RetrieveDogsList()
@@ -50,6 +64,25 @@ namespace Dogs.Code
                 var dogs = listStringJsonConverter.GetDogsFromResult(responseString);
 
                 return new Message() { Dogs = dogs};
+            }
+
+            return null;
+        }
+
+        private async Task<string> RetrieveDogImage(string breed)
+        {
+            var client = _clientFactory.CreateClient();
+
+            HttpResponseMessage response = await client.GetAsync($"https://dog.ceo/api/breed/{breed}/images");
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+
+                var dogImages = await JsonSerializer.DeserializeAsync<DogsImages>(responseStream);
+
+                var rand = new Random();
+            
+                return dogImages.Message[rand.Next(dogImages.Message.Count)];
             }
 
             return null;
